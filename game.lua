@@ -16,10 +16,11 @@ function ForcaGame:Start()
     print("Start the Game")
     quant_dica = ForcaGame:SorteiaDica()
     dica = ForcaGame:RetornaDica(quant_dica)
-    palavra = ForcaGame:SorteiaPalavra(dica)
+    palavra, numsort = ForcaGame:SorteiaPalavra(dica)
 
 
     print("Numero de Dica: ", quant_dica)
+    print("Numero Palavra: ", numsort)
     print("Dica Sorteada: ", dica)
     print("Palavra Sorteada: ", palavra)
 
@@ -52,7 +53,7 @@ function ForcaGame:SorteiaPalavra(banco_sorteado) -- Sorteia Palavra
         palavrasorteada = banco:read()
     end
     banco:close()
-    return palavrasorteada
+    return palavrasorteada, palavrasort
 end
     
 return ForcaGame
