@@ -14,15 +14,26 @@ function ForcaGame:new(forca)
     return forca
 end
 
-function ForcaGame:Start()
-    os.execute("clear")  -- Limpa tela
-    quant_dica = ForcaGame:SorteiaDica()  -- Sorteia Dica
-    ForcaGame.dica = ForcaGame:RetornaDica(quant_dica) -- Retorna nome da dica
-	str = ForcaGame:SorteiaPalavra(ForcaGame.dica) -- Retorna a palavra sorteada
+function ForcaGame:Start(mode)
+	str = ""
+	io.flush()
+	if mode == 1 then
+		io.read()
+		io.write(" Digite a dica: ")
+		ForcaGame.dica = io.read()
+		io.write(" Digite uma palavra: ")
+		str = io.read()
+	else
+		quant_dica = ForcaGame:SorteiaDica()  -- Sorteia Dica
+    	ForcaGame.dica = ForcaGame:RetornaDica(quant_dica) -- Retorna nome da dica
+		str = ForcaGame:SorteiaPalavra(ForcaGame.dica) -- Retorna a palavra sorteada
+	end
+
 	ForcaGame.dica = string.upper( ForcaGame.dica ) -- Coloca dica em caixa alta
 	ForcaGame:InicializaPalavra(str) -- Remove espacos e inicializa WORD
+    os.execute("clear")  -- Limpa tela
 
-	while ForcaGame.letraspreenchidas <= #ForcaGame.WORD  do -- Loop do jogo
+	while true do -- Loop do jogo
 		
 		ForcaGame:Boneco(ForcaGame.fase)  -- Imprime boneco
 	
@@ -35,7 +46,7 @@ function ForcaGame:Start()
 		io.write("ACERTOS: ")
 		ForcaGame:ImprimePalavra(ForcaGame.ACERTOS)
 		print("\n")
-		
+
 		ForcaGame:PreenchePalavra()  -- Preenche a palavra com os acertos
 		ForcaGame:ImprimePalavra(ForcaGame.WORD)  -- Imprime a palavra
 		print("\n")
@@ -111,6 +122,8 @@ function ForcaGame:PreenchePalavra() -- Completa a palavra com os acertos
 	for i=1, #ForcaGame.palavra, 1 do
 		if(ForcaGame:BuscaLetra(ForcaGame.ACERTOS, ForcaGame.palavra[i]) == true)  then
 			ForcaGame.WORD[i] = ForcaGame.palavra[i] -- Imprime a letra caso esteja no banco de acertos
+		elseif ForcaGame.palavra[i] == "*" then
+			ForcaGame.WORD[i] = "*"
 		else
 			ForcaGame.WORD[i] = "_" -- Nao imprime
 		end
@@ -299,4 +312,3 @@ function ForcaGame:Boneco(fase)
 end
     
 return ForcaGame
-
