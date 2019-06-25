@@ -2,7 +2,9 @@
 --
 
 ForcaGame = {
-    quant_dica = 0, dica = "", palavra = ""
+	letra = "", dica = "", palavra = {}, 
+	fase=0, ERRO = {}, ACERTOS = {}, 
+	WORD = {}, acertos = 0, letraspreenchidas = 0
 }
 
 function ForcaGame:new(forca)
@@ -13,17 +15,46 @@ function ForcaGame:new(forca)
 end
 
 function ForcaGame:Start()
-    print("Start the Game")
-    quant_dica = ForcaGame:SorteiaDica()
-    dica = ForcaGame:RetornaDica(quant_dica)
-    palavra, numsort = ForcaGame:SorteiaPalavra(dica)
+    os.execute("clear")  -- Limpa tela
+    quant_dica = ForcaGame:SorteiaDica()  -- Sorteia Dica
+    ForcaGame.dica = ForcaGame:RetornaDica(quant_dica) -- Retorna nome da dica
+	str = ForcaGame:SorteiaPalavra(ForcaGame.dica) -- Retorna a palavra sorteada
+	ForcaGame.dica = string.upper( ForcaGame.dica ) -- Coloca dica em caixa alta
+	ForcaGame:InicializaPalavra(str) -- Remove espacos e inicializa WORD
 
+	while ForcaGame.letraspreenchidas <= #ForcaGame.WORD  do -- Loop do jogo
+		
+		ForcaGame:Boneco(ForcaGame.fase)  -- Imprime boneco
+	
+		print("Dica: ", ForcaGame.dica )
+		print("Quant Letras: ", #ForcaGame.palavra)
 
-    print("Numero de Dica: ", quant_dica)
-    print("Numero Palavra: ", numsort)
-    print("Dica Sorteada: ", string.upper( dica ))
-    print("Palavra Sorteada: ", string.upper( palavra ))
+		io.write("ERROS: ")
+		ForcaGame:ImprimePalavra(ForcaGame.ERRO)
+		print("")
+		io.write("ACERTOS: ")
+		ForcaGame:ImprimePalavra(ForcaGame.ACERTOS)
+		print("\n")
+		
+		ForcaGame:PreenchePalavra()  -- Preenche a palavra com os acertos
+		ForcaGame:ImprimePalavra(ForcaGame.WORD)  -- Imprime a palavra
+		print("\n")
 
+		if ForcaGame.letraspreenchidas == #ForcaGame.WORD then
+			print("Voce Ganhou!!!")
+			break
+		elseif ForcaGame.fase < 6 then
+			io.write("Digite uma Letra: ")
+			ForcaGame.letra = string.upper( io.read() ) -- Coloca letra maiuscula
+			ForcaGame:VerificaLetra(ForcaGame.letra) -- Verifica se a letra esta na palavra
+			os.execute("clear")  -- Limpa tela
+		else
+			print("Voce Perdeu!!! Palavra Correta: " .. str)
+			break
+		end
+	end
+
+	io.close()
 end  
 
 function ForcaGame:SorteiaDica() -- Raffle the dica number
@@ -53,12 +84,79 @@ function ForcaGame:SorteiaPalavra(banco_sorteado) -- Sorteia Palavra
         palavrasorteada = banco:read()
     end
     banco:close()
-    return palavrasorteada, palavrasort
+    return palavrasorteada
 end
 
+function ForcaGame:InicializaPalavra(str)
+	for i=1, #str, 1 do
+		letra = string.sub(str, i, i) -- Captura letra da palavra
+		letra = ForcaGame:RemoveEspaco(letra)  -- Remove espaco e contabiliza como preenchido
+		letra = string.upper( letra ) -- Coloca em caixa alta
+		table.insert(ForcaGame.palavra, letra) -- Insere na palavra
+	end
+end
+
+function ForcaGame:RemoveEspaco(letra) -- Remove espaco e substitui por *
+	caracter = ""
+	if letra == " " then -- Troca espaco por hifen e contabiliza preenchido
+		caracter = "*"
+		ForcaGame.letraspreenchidas = ForcaGame.letraspreenchidas + 1
+	else
+		caracter = letra
+	end
+	return caracter
+end
+
+function ForcaGame:PreenchePalavra() -- Completa a palavra com os acertos
+	for i=1, #ForcaGame.palavra, 1 do
+		if(ForcaGame:BuscaLetra(ForcaGame.ACERTOS, ForcaGame.palavra[i]) == true)  then
+			ForcaGame.WORD[i] = ForcaGame.palavra[i] -- Imprime a letra caso esteja no banco de acertos
+		else
+			ForcaGame.WORD[i] = "_" -- Nao imprime
+		end
+	end
+end
+
+function ForcaGame:ImprimePalavra(palavra)
+	for i=1, #palavra, 1 do
+		io.write(palavra[i] .. " ")
+	end
+end
+
+function ForcaGame:BuscaLetra(tab, letra)  -- Busca letra e retorna se existe e quantas ocorrencias
+	cont = 0
+	for i=1, #tab, 1 do
+		if tab[i] == letra then
+			cont = cont + 1
+		end
+	end
+	
+	if cont ~= 0 then
+		return true, cont
+	else
+		return false, cont
+	end
+end
+
+function ForcaGame:VerificaLetra(letra)
+	achou, quant = ForcaGame:BuscaLetra(ForcaGame.palavra, letra)
+
+	if achou then
+		if ForcaGame:BuscaLetra(ForcaGame.ACERTOS, letra) == false then
+			table.insert( ForcaGame.ACERTOS, ForcaGame.letra)
+			ForcaGame.acertos = ForcaGame.acertos + 1
+			ForcaGame.letraspreenchidas = ForcaGame.letraspreenchidas + quant
+		end
+	else
+		if ForcaGame:BuscaLetra(ForcaGame.ERRO, letra) == false then
+			table.insert( ForcaGame.ERRO, letra)
+			ForcaGame.fase = ForcaGame.fase + 1
+		end
+	end
+end
 
 function ForcaGame:Boneco(fase)
-        if fase== 0 then
+    if fase == 0 then
 	
 	    print   ("-------------------------------------") 
         print   ("          =============              ") 
@@ -78,7 +176,7 @@ function ForcaGame:Boneco(fase)
         print   ("                      ||             ")
         print   ("-------------------------------------") 
 		
-    elseif fase== 1 then
+    elseif fase == 1 then
 	
         print   ("-------------------------------------")
 		print   ("          =============              ")
@@ -98,16 +196,16 @@ function ForcaGame:Boneco(fase)
 		print   ("                      ||             ")
 		print   ("-------------------------------------") 
 		
-	elseif fase== 2 then
+	elseif fase == 2 then
 	
         print  ("-------------------------------------") 
 		print  ("          =============              ")
 		print  ("         |            ||             ")
 		print  ("         |            ||             ")
 		print  ("        _|_           ||             ")
-		print  ("      /   \\          ||             ")
+		print  ("       /   \\          ||             ")
 		print  ("      | 0 0 |         ||             ")
-		print  ("      \\ - /          ||             ")
+		print  ("       \\ - /          ||             ")
 		print  ("      _ |_| _         ||             ")
 		print  ("       |   |          ||             ")
 		print  ("       |   |          ||             ")
@@ -118,7 +216,7 @@ function ForcaGame:Boneco(fase)
 		print  ("                      ||             ")
 		print  ("-------------------------------------")
 		
-	elseif fase== 3 then
+	elseif fase == 3 then
 		
 	    print   ("-------------------------------------")
 		print   ("          =============              ")
@@ -138,27 +236,7 @@ function ForcaGame:Boneco(fase)
 		print   ("                      ||             ")
 		print   ("-------------------------------------")
 		
-	elseif fase== 4 then
-	
-        print   ("------------------------------------- ")
-		print   ("          =============               ")
-		print   ("         |            ||              ")
-		print   ("         |            ||              ")
-		print   ("        _|_           ||              ")
-		print   ("       /   \\          ||             ")
-		print   ("      | 0 0 |         ||              ")
-		print   ("       \\ - /          ||             ")
-		print   ("      _ |_| _         ||              ")
-		print   ("     / |   |          ||              ")
-		print   ("    / /|   |          ||              ")
-		print   ("   /_/ |___|          ||              ")
-		print   ("                      ||              ")
-		print   ("                      ||              ")
-		print   ("                      ||              ")
-		print   ("                      ||              ")
-		print   ("------------------------------------- ")
-		
-	elseif fase== 5 then
+	elseif fase == 4 then
         
         print   ("------------------------------------- ")
 		print   ("          =============               ")
@@ -178,7 +256,7 @@ function ForcaGame:Boneco(fase)
 		print   ("                      ||              ")
 		print   ("------------------------------------- ")
 
-    elseif fase==6 then
+    elseif fase == 5 then
 
         print   ("------------------------------------- ")
 		print   ("          =============               ")
@@ -198,7 +276,7 @@ function ForcaGame:Boneco(fase)
 		print   (" |____|               ||              ")
 		print   ("------------------------------------- ")
 
-    elseif fase==7 then
+    elseif fase == 6 then
 	
         print   ("------------------------------------- ")
 		print   ("          =============               ")
@@ -218,7 +296,7 @@ function ForcaGame:Boneco(fase)
 		print   (" |____|     |____|    ||              ")
 		print   ("------------------------------------- ")
     end
- end
+end
     
 return ForcaGame
 
