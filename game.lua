@@ -21,8 +21,8 @@ function ForcaGame:Start()
 
     print("Numero de Dica: ", quant_dica)
     print("Numero Palavra: ", numsort)
-    print("Dica Sorteada: ", dica)
-    print("Palavra Sorteada: ", palavra)
+    print("Dica Sorteada: ", string.upper( dica ))
+    print("Palavra Sorteada: ", string.upper( palavra ))
 
 end  
 
