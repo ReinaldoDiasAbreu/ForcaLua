@@ -16,7 +16,6 @@ end
 
 function ForcaGame:Start(mode)
 	str = ""
-	io.flush()
 	if mode == 1 then
 		io.read()
 		io.write(" Digite a dica: ")
@@ -28,13 +27,14 @@ function ForcaGame:Start(mode)
     	ForcaGame.dica = ForcaGame:RetornaDica(quant_dica) -- Retorna nome da dica
 		str = ForcaGame:SorteiaPalavra(ForcaGame.dica) -- Retorna a palavra sorteada
 	end
-
+	
+	
+	os.execute("clear")  -- Limpa tela
 	ForcaGame.dica = string.upper( ForcaGame.dica ) -- Coloca dica em caixa alta
 	ForcaGame:InicializaPalavra(str) -- Remove espacos e inicializa WORD
-    os.execute("clear")  -- Limpa tela
 
 	while true do -- Loop do jogo
-		
+
 		ForcaGame:Boneco(ForcaGame.fase)  -- Imprime boneco
 	
 		print("Dica: ", ForcaGame.dica )

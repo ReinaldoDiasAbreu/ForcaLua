@@ -14,12 +14,11 @@ function main()
     io.write("> ")
     mode = io.read("*number")
     
-    if modo ~= 3 then
+    if mode ~= 3 then
         Forca:Start(mode)
     else
         io.close()
     end
-
 end
 
 main()
