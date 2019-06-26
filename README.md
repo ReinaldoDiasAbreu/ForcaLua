@@ -1,11 +1,12 @@
 # ForcaLua
 Jogo da Forca desenvolvido em Lua.
 
-##  Objetivos
+## Objetivos
 
-
-## Funcionalidades
-
+## Tecnologia Usada
 
 ## Instalação
 
+## Modo de Usar
+
+## Colaboradores
