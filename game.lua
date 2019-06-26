@@ -2,7 +2,7 @@
 --
 
 ForcaGame = {
-	letra = "", dica = "", palavra = {}, 
+	letra = "", tam = 0, dica = "", palavra = {}, 
 	fase=0, ERRO = {}, ACERTOS = {}, 
 	WORD = {}, acertos = 0, letraspreenchidas = 0
 }
@@ -28,6 +28,7 @@ function ForcaGame:Start(mode)
 		str = ForcaGame:SorteiaPalavra(ForcaGame.dica) -- Retorna a palavra sorteada
 	end
 	
+	io.read()
 	
 	os.execute("clear")  -- Limpa tela
 	ForcaGame.dica = string.upper( ForcaGame.dica ) -- Coloca dica em caixa alta
@@ -38,7 +39,7 @@ function ForcaGame:Start(mode)
 		ForcaGame:Boneco(ForcaGame.fase)  -- Imprime boneco
 	
 		print("Dica: ", ForcaGame.dica )
-		print("Quant Letras: ", #ForcaGame.palavra)
+		print("Quantidade Letras: ", ForcaGame.tam)
 
 		io.write("ERROS: ")
 		ForcaGame:ImprimePalavra(ForcaGame.ERRO)
@@ -99,9 +100,13 @@ function ForcaGame:SorteiaPalavra(banco_sorteado) -- Sorteia Palavra
 end
 
 function ForcaGame:InicializaPalavra(str)
+	ForcaGame.tam = #str
 	for i=1, #str, 1 do
 		letra = string.sub(str, i, i) -- Captura letra da palavra
-		letra = ForcaGame:RemoveEspaco(letra)  -- Remove espaco e contabiliza como preenchido
+		if(letra == " ") then
+			letra = ForcaGame:RemoveEspaco(letra)  -- Remove espaco e contabiliza como preenchido
+			ForcaGame.tam = ForcaGame.tam  - 1
+		end
 		letra = string.upper( letra ) -- Coloca em caixa alta
 		table.insert(ForcaGame.palavra, letra) -- Insere na palavra
 	end
@@ -152,18 +157,19 @@ function ForcaGame:BuscaLetra(tab, letra)  -- Busca letra e retorna se existe e 
 end
 
 function ForcaGame:VerificaLetra(letra)
-	achou, quant = ForcaGame:BuscaLetra(ForcaGame.palavra, letra)
-
-	if achou then
-		if ForcaGame:BuscaLetra(ForcaGame.ACERTOS, letra) == false then
-			table.insert( ForcaGame.ACERTOS, ForcaGame.letra)
-			ForcaGame.acertos = ForcaGame.acertos + 1
-			ForcaGame.letraspreenchidas = ForcaGame.letraspreenchidas + quant
-		end
-	else
-		if ForcaGame:BuscaLetra(ForcaGame.ERRO, letra) == false then
-			table.insert( ForcaGame.ERRO, letra)
-			ForcaGame.fase = ForcaGame.fase + 1
+	if (letra ~= "" and letra ~= " ") then
+		achou, quant = ForcaGame:BuscaLetra(ForcaGame.palavra, letra)
+		if achou then
+			if ForcaGame:BuscaLetra(ForcaGame.ACERTOS, letra) == false then
+				table.insert( ForcaGame.ACERTOS, ForcaGame.letra)
+				ForcaGame.acertos = ForcaGame.acertos + 1
+				ForcaGame.letraspreenchidas = ForcaGame.letraspreenchidas + quant
+			end
+		else
+			if ForcaGame:BuscaLetra(ForcaGame.ERRO, letra) == false then
+				table.insert( ForcaGame.ERRO, letra)
+				ForcaGame.fase = ForcaGame.fase + 1
+			end
 		end
 	end
 end
