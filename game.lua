@@ -7,7 +7,7 @@ ForcaGame = {
 	WORD = {}, acertos = 0, letraspreenchidas = 0
 }
 
-function ForcaGame:new(forca)
+function ForcaGame:new(forca)  -- Instanciação do Objeto
     forca = forca or {}
     setmetatable(forca, self)
     self.__index = self
@@ -15,13 +15,19 @@ function ForcaGame:new(forca)
 end
 
 function ForcaGame:Start(mode)
+	ForcaGame:Reiniciar() -- Reinicia Variaveis
+	os.execute("clear")  -- Limpa tela
 	str = ""
 	if mode == 1 then
 		io.read()
-		io.write(" Digite a dica: ")
+		print("-------------------------------------")
+    	print("             FORCA LUA               ")
+    	print("-------------------------------------")
+		io.write(" Digite uma dica: ")
 		ForcaGame.dica = io.read()
 		io.write(" Digite uma palavra: ")
 		str = io.read()
+		print("\n Digite ENTER para começar...")
 	else
 		quant_dica = ForcaGame:SorteiaDica()  -- Sorteia Dica
     	ForcaGame.dica = ForcaGame:RetornaDica(quant_dica) -- Retorna nome da dica
@@ -68,6 +74,19 @@ function ForcaGame:Start(mode)
 
 	io.close()
 end  
+
+function ForcaGame:Reiniciar() -- Reinicia variaveis do objeto
+	ForcaGame.letra = ""
+	ForcaGame.tam = 0
+	ForcaGame.dica = ""
+	ForcaGame.palavra = {}
+	ForcaGame.fase= 0
+	ForcaGame.ERRO = {}
+	ForcaGame.ACERTOS = {}
+	ForcaGame.WORD = {}
+	ForcaGame.acertos = 0
+	ForcaGame.letraspreenchidas = 0
+end
 
 function ForcaGame:SorteiaDica() -- Raffle the dica number
     dicas = io.open("dicas.words", r)  -- Open file dicas
