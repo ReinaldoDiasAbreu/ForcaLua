@@ -19,8 +19,7 @@ lua main.lua
 ## Modo de Usar
 Ao executar o jogo é perguntado ao usuário em qual modo ele deseja jogar, se é com um ou mais jogadores. 
 
-![](screen/menu.png)
-![](screen/game.png)
+
 
 ## Colaboradores
 

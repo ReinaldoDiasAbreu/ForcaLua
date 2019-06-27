@@ -1,3 +1,4 @@
+--
 -- Objeto com as funções principais do jogo
 --
 
@@ -154,7 +155,7 @@ function ForcaGame:PreenchePalavra() -- Completa a palavra com os acertos
 	end
 end
 
-function ForcaGame:ImprimePalavra(palavra)
+function ForcaGame:ImprimePalavra(palavra) -- Imprime table com espaçamento
 	for i=1, #palavra, 1 do
 		io.write(palavra[i] .. " ")
 	end
@@ -175,7 +176,7 @@ function ForcaGame:BuscaLetra(tab, letra)  -- Busca letra e retorna se existe e 
 	end
 end
 
-function ForcaGame:VerificaLetra(letra)
+function ForcaGame:VerificaLetra(letra) -- Busca letra, verifica se é válida e contabiliza erros e acertos
 	if (letra ~= "" and letra ~= " ") then
 		achou, quant = ForcaGame:BuscaLetra(ForcaGame.palavra, letra)
 		if achou then
@@ -193,7 +194,7 @@ function ForcaGame:VerificaLetra(letra)
 	end
 end
 
-function ForcaGame:Boneco(fase)
+function ForcaGame:Boneco(fase)  -- Imprime boneco corespondente com os erros
     if fase == 0 then
 	
 	    print   ("-------------------------------------") 
@@ -336,4 +337,4 @@ function ForcaGame:Boneco(fase)
     end
 end
     
-return ForcaGame
+return ForcaGame -- Retorna Instancia do Objeto

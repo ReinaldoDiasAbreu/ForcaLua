@@ -1,11 +1,10 @@
 -- Script principal
 -- com a estrutura visual do game.
 
-Game = require("game")
-
-Forca = Game:new()
+Game = require("game") -- Importa arquivo game
 
 function main()
+    Forca = Game:new() -- Instancia Objeto
     continua = "S"
     while(continua == "S" or continua == "s") do
         os.execute("clear")  -- Limpa tela
@@ -20,12 +19,13 @@ function main()
         mode = io.read("*number")
         
         if mode ~= 3 then
+            
             Forca:Start(mode)
             print("Você deseja continuar jogando? (S/N) ")
             continua = io.read()
         else
             io.close()
-            continua = "n"
+            continua = "N"
         end
     end
 end
