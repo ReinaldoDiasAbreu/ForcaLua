@@ -2,7 +2,7 @@
 Jogo da Forca desenvolvido em Lua.
 
 ## Objetivos
-Mostrar uma das inúmeras utilidades que a programação nesta linguagem, pode proporcionar, como neste trabalho, utiliza-se o exemplo de um jogo.
+Mostrar uma das inúmeras utilidades que a programação nesta linguagem pode proporcionar, como neste trabalho, utiliza-se o exemplo na criação de um jogo.
 
 ## Tecnologia Usada
 A linguagem utilizada, neste jogo da forca, foi a linguagem Lua (versão 5.3.5) frequentemente utilizada com um propósito geral, por ser extensível para a criação de softwares complexos, como por exemplo jogos. Esta está possuindo grande evidência mundial, devido ser capaz de atribuir recursos  de configuração a aplicações já desenvolvidas com um mínimo de integração.
@@ -15,16 +15,16 @@ O ForcaLua possui dois modos de jogo, o singleplayer e multiplayer.
 
 ![](screen/menu.png)
 
-No modo singueplayer (1 jogador) o jogo sorteará dicas e palavras cadastradas nos arquivos de dados, atualmente estão cadastradas 679 palavras para as dicas: animais, nomes, objetos, paises e profissões, todas sem acentuação e incluídas palavras compostas.
+No modo singleplayer (1 jogador) o jogo sorteará dicas e palavras cadastradas nos arquivos de dados, atualmente estão cadastradas 679 palavras para as dicas: animais, nomes, objetos, países e profissões, todas sem acentuação e incluídas palavras compostas.
 
-No modo multiplayer (mais de 1 jogador), o jogo solicita ao jogador um uma dica e uma palavra, e que após iniciado o jogo cumbirá o jogador 2 adivinha-lá.
+No modo multiplayer (mais de 1 jogador), o jogo solicita ao jogador 1 uma dica e uma palavra, e que após iniciado caberá o jogador 2 adivinha-lá.
 
-Este é o visual do jogo e as informações que ele fornece, sendo a dica a quantidade de letras sem a contagem dos espaços que são representados por um * (asterisco), além de uma lista das letras acertadas e erradas. O também é desconsiderado o caso de digitada letra repetida ou espaço.
+A próxima imagem mostra o visual do jogo e as informações que ele fornece, sendo a dica a quantidade de letras sem a contagem dos espaços que são representados por um * (asterisco), além de uma lista das letras acertadas e erradas. O jogo desconsidera o caso de digitada letra repetida ou espaço.
 
 ![](screen/game.png)
 
 ## Instalação
-Para intalar e executar, é necessária a instalação do Lua. Segue os comandos para instalação:
+Para instalar e executar, é necessária a instalação do Lua. Segue os comandos para instalação:
     
 * Windows: 
         [Download LuaForWindows](https://code.google.com/archive/p/luaforwindows/downloads)
@@ -47,7 +47,7 @@ lua forca.lua
 ```
 
 ## Material de Consulta
-Para desenvolvimento desse jogo foi utilizada somente a documentação oficial da linguagem em português: Disponível em: <https://www.lua.org/manual/5.2/pt/manual.html>
+Para desenvolvimento desse jogo foi utilizada somente a documentação oficial da linguagem em português. Disponível em: <https://www.lua.org/manual/5.2/pt/manual.html>
 
 ## Adicionar ou Alterar palavras
 O jogo possui a seguinte estrutura de arquivos:
@@ -67,11 +67,11 @@ O jogo possui a seguinte estrutura de arquivos:
 
 Os arquivos que possuem extenção .words fazem parte do banco de palavras em que cada arquivo possui na primeira linha a quantidade de palavras digitadas por linha no arquivo (lembrando que as palavras não podem possuir acentuação).
 
-Para adicionar palavras em algum dos arquivos, asta adicioná-las no fim do arquivo com a dica desejada e acrecentar a quantidade adicionada ao numero de palavras do arquivo na primeira linha.
+Para adicionar palavras em algum dos arquivos, basta adicioná-las no fim do arquivo com a dica desejada e acrecentar a quantidade adicionada ao número de palavras do arquivo na primeira linha.
 
-Já para adicionar uma nova dica ou categoria de palavras, deve-se ciar um arquivo com a extenção .words como por exemplo: [ comida.words ] cujo nome do arquivo não poderá ser uma palavra composta.
+Já para adicionar uma nova dica ou categoria de palavras, deve-se criar um arquivo com a extenção .words como por exemplo: [ comida.words ] cujo nome do arquivo não poderá ser uma palavra composta.
 
-Após isso basta ir ao arquivo dicas.words e adicionar uma linha com o nome do arquivo e acrescentar na primeira linha a quantidade de linhas acrescentadas, assim o jogo passará a mapear o seu arquivo adicionado. Veja no exemplo a adição da dica comida, cujo arquico comida.words já foi criado.
+Após isso vá ao arquivo dicas.words e adicione uma linha com o nome do arquivo e acrescente na primeira linha a quantidade de linhas acrescentadas, assim o jogo passará a mapear o seu arquivo adicionado. Veja no exemplo a adição da dica comida, cujo arquivo comida.words já foi criado.
 
 ![](screen/dicaadd.png)
 
