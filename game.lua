@@ -93,7 +93,9 @@ function ForcaGame:SorteiaDica() -- Raffle the dica number
     dicas = io.open("dicas.words", r)  -- Open file dicas
     q_dica = dicas:read() -- Read dica number
     dicas:close() -- Close the file
-    math.randomseed(os.time()) -- Create seed for random
+	math.randomseed(os.time()) -- Create seed for random
+	math.random()
+	math.random()
     return math.random(q_dica) -- Return number the raffle
 end
 
@@ -109,7 +111,10 @@ end
 function ForcaGame:SorteiaPalavra(banco_sorteado) -- Sorteia Palavra
     banco = io.open(banco_sorteado .. ".words", r)
     num_palavras = banco:read() -- Read number the words
-    math.randomseed(os.time()) -- Create seed for random
+	math.randomseed(os.time()) -- Create seed for random
+	math.random() -- Adicionar mais Random ajudam na melhor aleatoriedade
+	math.random()
+	math.random()
     palavrasort = math.random(num_palavras) 
     
     for i=1, palavrasort, 1 do
