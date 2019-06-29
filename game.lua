@@ -28,7 +28,7 @@ function ForcaGame:Start(mode)
 		ForcaGame.dica = io.read()
 		io.write(" Digite uma palavra: ")
 		str = io.read()
-		print("\n Digite ENTER para começar...")
+		print("\n Digite ENTER para comecar...")
 	else
 		quant_dica = ForcaGame:SorteiaDica()  -- Sorteia Dica
     	ForcaGame.dica = ForcaGame:RetornaDica(quant_dica) -- Retorna nome da dica
@@ -347,9 +347,9 @@ function ForcaGame:Boneco(fase)  -- Imprime boneco corespondente com os erros
 end
 
 function ForcaGame:Clear() -- Limpa a tela de acordo com o sistema operacional
-	r = os.execute("clear")
-	if(r == false) then
-		os.execute("cls")
+	r = os.execute("cls") -- Clear no Windows
+	if(r == nil) then
+		os.execute("clear") -- Caso nao funcione tenta o camando clear do linux e macos
 	end
 end
     

@@ -21,7 +21,7 @@ function main()
         if mode ~= 3 then
             
             Forca:Start(mode)
-            print("Você deseja continuar jogando? (S/N) ")
+            print("Voce deseja continuar jogando? (S/N) ")
             continua = io.read()
         else
             io.close()
