@@ -7,7 +7,7 @@ function main()
     Forca = Game:new() -- Instancia Objeto
     continua = "S"
     while(continua == "S" or continua == "s") do
-        os.execute("clear")  -- Limpa tela
+        ForcaGame:Clear()
         print("-------------------------------------")
         print("             FORCA LUA               ")
         print("-------------------------------------")

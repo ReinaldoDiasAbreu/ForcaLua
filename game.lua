@@ -17,7 +17,7 @@ end
 
 function ForcaGame:Start(mode)
 	ForcaGame:Reiniciar() -- Reinicia Variaveis
-	os.execute("clear")  -- Limpa tela
+	ForcaGame:Clear()
 	str = ""
 	if mode == 1 then
 		io.read()
@@ -37,7 +37,7 @@ function ForcaGame:Start(mode)
 	
 	io.read()
 	
-	os.execute("clear")  -- Limpa tela
+	ForcaGame:Clear()
 	ForcaGame.dica = string.upper( ForcaGame.dica ) -- Coloca dica em caixa alta
 	ForcaGame:InicializaPalavra(str) -- Remove espacos e inicializa WORD
 
@@ -66,7 +66,7 @@ function ForcaGame:Start(mode)
 			io.write("Digite uma Letra: ")
 			ForcaGame.letra = string.upper( io.read() ) -- Coloca letra maiuscula
 			ForcaGame:VerificaLetra(ForcaGame.letra) -- Verifica se a letra esta na palavra
-			os.execute("clear")  -- Limpa tela
+			ForcaGame:Clear()
 		else
 			print("Voce Perdeu!!! Palavra Correta: " .. str)
 			break
@@ -90,7 +90,9 @@ function ForcaGame:Reiniciar() -- Reinicia variaveis do objeto
 end
 
 function ForcaGame:SorteiaDica() -- Raffle the dica number
-    dicas = io.open("dicas.words", r)  -- Open file dicas
+	file = "dicas.words"
+	dicas = io.open(file)  -- Open file dicas
+	
     q_dica = dicas:read() -- Read dica number
     dicas:close() -- Close the file
 	math.randomseed(os.time()) -- Create seed for random
@@ -100,7 +102,8 @@ function ForcaGame:SorteiaDica() -- Raffle the dica number
 end
 
 function ForcaGame:RetornaDica(ndica) -- Return the name file dica
-    dicas = io.open("dicas.words", r) -- Open file dicas
+	file = "dicas.words"
+    dicas = io.open(file) -- Open file dicas
     for i=1, ndica+1, 1 do
         dica = dicas:read()  -- Read dicas
     end
@@ -109,7 +112,8 @@ function ForcaGame:RetornaDica(ndica) -- Return the name file dica
 end
 
 function ForcaGame:SorteiaPalavra(banco_sorteado) -- Sorteia Palavra
-    banco = io.open(banco_sorteado .. ".words", r)
+	file = banco_sorteado .. ".words"
+    banco = io.open(file)
     num_palavras = banco:read() -- Read number the words
 	math.randomseed(os.time()) -- Create seed for random
 	math.random() -- Adicionar mais Random ajudam na melhor aleatoriedade
@@ -340,6 +344,13 @@ function ForcaGame:Boneco(fase)  -- Imprime boneco corespondente com os erros
 		print   (" |____|     |____|    ||              ")
 		print   ("------------------------------------- ")
     end
+end
+
+function ForcaGame:Clear() -- Limpa a tela de acordo com o sistema operacional
+	r = os.execute("clear")
+	if(r == false) then
+		os.execute("cls")
+	end
 end
     
 return ForcaGame -- Retorna Instancia do Objeto
