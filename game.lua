@@ -185,19 +185,22 @@ function ForcaGame:BuscaLetra(tab, letra)  -- Busca letra e retorna se existe e 
 	end
 end
 
-function ForcaGame:VerificaLetra(letra) -- Busca letra, verifica se é válida e contabiliza erros e acertos
-	if (letra ~= "" and letra ~= " ") then
-		achou, quant = ForcaGame:BuscaLetra(ForcaGame.palavra, letra)
-		if achou then
-			if ForcaGame:BuscaLetra(ForcaGame.ACERTOS, letra) == false then
-				table.insert( ForcaGame.ACERTOS, ForcaGame.letra)
-				ForcaGame.acertos = ForcaGame.acertos + 1
-				ForcaGame.letraspreenchidas = ForcaGame.letraspreenchidas + quant
-			end
-		else
-			if ForcaGame:BuscaLetra(ForcaGame.ERRO, letra) == false then
-				table.insert( ForcaGame.ERRO, letra)
-				ForcaGame.fase = ForcaGame.fase + 1
+function ForcaGame:VerificaLetra(nome) -- Busca letra, verifica se é válida e contabiliza erros e acertos
+	for i=1, #nome, 1 do
+		letra = string.sub( nome, i, i)
+		if (letra ~= "" and letra ~= " ") then
+			achou, quant = ForcaGame:BuscaLetra(ForcaGame.palavra, letra)
+			if achou then
+				if ForcaGame:BuscaLetra(ForcaGame.ACERTOS, letra) == false then
+					table.insert( ForcaGame.ACERTOS, letra)
+					ForcaGame.acertos = ForcaGame.acertos + 1
+					ForcaGame.letraspreenchidas = ForcaGame.letraspreenchidas + quant
+				end
+			else
+				if ForcaGame:BuscaLetra(ForcaGame.ERRO, letra) == false then
+					table.insert( ForcaGame.ERRO, letra)
+					ForcaGame.fase = ForcaGame.fase + 1
+				end
 			end
 		end
 	end
