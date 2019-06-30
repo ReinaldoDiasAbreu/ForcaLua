@@ -19,7 +19,7 @@ No modo singleplayer (1 jogador) o jogo sorteará dicas e palavras cadastradas n
 
 No modo multiplayer (mais de 1 jogador), o jogo solicita ao jogador 1 uma dica e uma palavra, e que após iniciado caberá o jogador 2 adivinha-lá.
 
-A próxima imagem mostra o visual do jogo e as informações que ele fornece, sendo a dica a quantidade de letras sem a contagem dos espaços que são representados por um * (asterisco), além de uma lista das letras acertadas e erradas. O jogo desconsidera o caso de digitada letra repetida ou espaço.
+A próxima imagem mostra o visual do jogo e as informações que ele fornece, sendo a dica a quantidade de letras sem a contagem dos espaços que são representados por um * (asterisco), além de uma lista das letras acertadas e erradas. O jogo desconsidera o caso de digitada letra repetida ou espaço. É possível digitar mais de uma letra para ser analizada, podendo assim preencher toda palavra uma unica vez.
 
 ![](screen/game.png)
 
