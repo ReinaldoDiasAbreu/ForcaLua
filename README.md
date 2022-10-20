@@ -27,7 +27,7 @@ A próxima imagem mostra o visual do jogo e as informações que ele fornece, se
 Para instalar e executar, é necessária a instalação do Lua. Segue os comandos para instalação:
     
 * Windows: 
-        [Download LuaForWindows](https://code.google.com/archive/p/luaforwindows/downloads)
+        [Download LuaForWindows](https://github.com/rjpcomputing/luaforwindows/releases)
 * Ubuntu ou Derivados: 
 
     ```
